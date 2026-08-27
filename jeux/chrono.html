@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Chrono - Flashcards</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../assets/css/style.css?v=12">
+</head>
+<body class="page-jeu">
+<header class="entete">
+  <h1>Chrono</h1>
+  <div class="controle-taille">
+    <label for="curseur-taille">Taille des images</label>
+    <input type="range" id="curseur-taille" min="50" max="400" step="10" value="100">
+    <span id="valeur-taille" class="valeur-taille">100 %</span>
+  </div>
+  <div class="controle-taille">
+    <label for="curseur-texte">Taille du texte</label>
+    <input type="range" id="curseur-texte" min="50" max="400" step="10" value="100">
+    <span id="valeur-texte" class="valeur-taille">100 %</span>
+  </div>
+  <nav><a id="lien-retour" href="../">← Menu des jeux</a></nav>
+</header>
+<main class="conteneur">
+  <section id="ecran-configuration">
+    <h2>Ensemble : <span id="nom-ensemble"></span></h2>
+    <div id="zone-selecteur"></div>
+    <fieldset class="selecteur-nombre">
+      <legend>Affichage</legend>
+      <label class="option-radio"><input type="radio" name="mode-affichage" value="both" checked> Images + mots</label>
+      <label class="option-radio"><input type="radio" name="mode-affichage" value="images"> Images seules</label>
+      <label class="option-radio"><input type="radio" name="mode-affichage" value="mots"> Mots seuls</label>
+    </fieldset>
+    <p class="aide">Une carte sans mot associé affichera son image même en mode "Mots seuls".</p>
+    <label class="option-champ-duree">
+      Durée par carte :
+      <input type="number" id="champ-duree" min="2" max="30" value="5" step="1">
+      secondes
+    </label>
+    <button id="bouton-demarrer">Démarrer</button>
+    <p id="erreur-chargement" class="message-erreur" hidden></p>
+  </section>
+
+  <section id="ecran-jeu" hidden>
+    <div class="zone-carte">
+      <img id="image-carte" alt="">
+      <p id="mot-carte" class="mot-carte" hidden></p>
+    </div>
+    <div class="barre-chrono-fond"><div id="barre-chrono" class="barre-chrono"></div></div>
+    <p id="minuteur-texte" class="statut-jeu"></p>
+    <div class="commandes-jeu">
+      <button id="bouton-pause">Pause</button>
+      <button id="bouton-suivante">Carte suivante →</button>
+    </div>
+    <p id="compteur-cartes" class="statut-jeu"></p>
+    <button id="bouton-recommencer" class="bouton-secondaire">Changer les cartes</button>
+  </section>
+</main>
+<script src="../assets/js/game-common.js?v=12"></script>
+<script src="../assets/js/jeu-chrono.js?v=12"></script>
+</body>
+</html>

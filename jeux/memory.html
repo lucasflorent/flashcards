@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Memory - Flashcards</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../assets/css/style.css?v=12">
+</head>
+<body class="page-jeu">
+<header class="entete">
+  <h1>Memory</h1>
+  <div class="controle-taille">
+    <label for="curseur-taille">Taille des images</label>
+    <input type="range" id="curseur-taille" min="50" max="400" step="10" value="100">
+    <span id="valeur-taille" class="valeur-taille">100 %</span>
+  </div>
+  <div class="controle-taille">
+    <label for="curseur-texte">Taille du texte</label>
+    <input type="range" id="curseur-texte" min="50" max="400" step="10" value="100">
+    <span id="valeur-texte" class="valeur-taille">100 %</span>
+  </div>
+  <nav><a id="lien-retour" href="../">← Menu des jeux</a></nav>
+</header>
+<main class="conteneur">
+  <section id="ecran-configuration">
+    <h2>Ensemble : <span id="nom-ensemble"></span></h2>
+    <p class="aide">Chaque carte sélectionnée sera doublée pour former les paires du memory.</p>
+    <div id="zone-selecteur"></div>
+    <button id="bouton-demarrer">Démarrer</button>
+    <p id="erreur-chargement" class="message-erreur" hidden></p>
+  </section>
+
+  <section id="ecran-jeu" hidden>
+    <p id="statut-jeu" class="statut-jeu"></p>
+    <div id="grille-memory" class="grille-cartes-jeu"></div>
+    <button id="bouton-recommencer" class="bouton-secondaire">Changer les cartes</button>
+  </section>
+</main>
+<script src="../assets/js/game-common.js?v=12"></script>
+<script src="../assets/js/jeu-memory.js?v=12"></script>
+</body>
+</html>

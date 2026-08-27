@@ -1,0 +1,833 @@
+:root {
+  --couleur-fond: #f4f6fb;
+  --couleur-texte: #1c2333;
+  --couleur-accent: #2f6fed;
+  --couleur-accent-fonce: #1e4fb8;
+  --couleur-danger: #c0392b;
+  --couleur-bordure: #d5dbe8;
+  --couleur-carte: #ffffff;
+  --rayon: 12px;
+  --echelle-carte: 1;
+  --echelle-texte: 1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Garantit que l'attribut HTML "hidden" masque toujours l'élément, même
+   quand une classe (ex. display:flex) définit par ailleurs sa propriété
+   display — sans cette règle, un display d'origine "auteur" l'emporte sur
+   la règle par défaut du navigateur pour [hidden]. */
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Verdana, Arial, sans-serif;
+  background: var(--couleur-fond);
+  color: var(--couleur-texte);
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+h1, h2, h3 {
+  line-height: 1.2;
+}
+
+a {
+  color: var(--couleur-accent-fonce);
+}
+
+.conteneur {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.conteneur-etroit {
+  max-width: 420px;
+  margin: 60px auto;
+  padding: 24px;
+}
+
+.entete {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px 24px 0;
+}
+
+/* Pages de jeu : utiliser toute la largeur de l'écran (vidéoprojecteur)
+   plutôt que la largeur de lecture confortable des pages de texte/admin. */
+body.page-jeu .conteneur,
+body.page-jeu .entete {
+  max-width: none;
+}
+
+.entete nav a {
+  margin-left: 16px;
+  font-weight: 600;
+}
+
+.controle-taille {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.controle-taille input[type="range"] {
+  width: 140px;
+}
+
+.valeur-taille {
+  min-width: 48px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.option-checkbox-inline {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.tableau-scores {
+  position: fixed;
+  top: 90px;
+  right: 16px;
+  z-index: 50;
+  background: var(--couleur-carte);
+  border: 2px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+  padding: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 220px;
+}
+
+.ligne-equipe {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nom-equipe {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.9rem;
+  padding: 4px 6px;
+}
+
+.valeur-score {
+  min-width: 26px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 1.1rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.btn-score-plus, .btn-score-moins {
+  padding: 4px 10px;
+  font-size: 1rem;
+  min-width: unset;
+}
+
+#bouton-reinitialiser-scores {
+  background: #56606f;
+  font-size: 0.85rem;
+  padding: 6px;
+}
+
+#bouton-reinitialiser-scores:hover {
+  background: #3d4552;
+}
+
+button, .bouton-jeu, .bouton-ensemble {
+  font-family: inherit;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  border-radius: var(--rayon);
+  padding: 14px 22px;
+  background: var(--couleur-accent);
+  color: #fff;
+  transition: background 0.15s ease, transform 0.05s ease;
+}
+
+button:hover, .bouton-jeu:hover, .bouton-ensemble:hover {
+  background: var(--couleur-accent-fonce);
+}
+
+button:active, .bouton-jeu:active, .bouton-ensemble:active {
+  transform: scale(0.98);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-supprimer, .btn-suppr-carte {
+  background: var(--couleur-danger);
+}
+
+.btn-supprimer:hover, .btn-suppr-carte:hover {
+  background: #96291d;
+}
+
+.btn-monter, .btn-descendre {
+  background: #56606f;
+}
+
+.btn-monter:hover, .btn-descendre:hover {
+  background: #3d4552;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 480px;
+}
+
+label {
+  font-weight: 600;
+}
+
+input[type="text"], input[type="password"], input[type="file"], input[type="number"], select {
+  font-size: 1.05rem;
+  padding: 10px 12px;
+  border: 2px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+  background: #fff;
+  color: var(--couleur-texte);
+}
+
+input:focus, select:focus, button:focus {
+  outline: 3px solid #9dc0ff;
+  outline-offset: 1px;
+}
+
+/* Masque le bouton "afficher le mot de passe" natif d'Edge, qui se
+   superposerait à notre propre bouton .btn-oeil */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+.champ-mot-de-passe {
+  position: relative;
+  display: flex;
+}
+
+.champ-mot-de-passe input {
+  flex: 1;
+  padding-right: 46px;
+}
+
+.btn-oeil {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  padding: 6px;
+  border-radius: 8px;
+  color: #56606f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.btn-oeil:hover {
+  background: #eef1f7;
+}
+
+.carte-form {
+  background: var(--couleur-carte);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+  padding: 20px;
+  margin-bottom: 28px;
+}
+
+.message-erreur {
+  color: var(--couleur-danger);
+  font-weight: 600;
+}
+
+.vide {
+  color: #667;
+  font-style: italic;
+}
+
+/* Accueil : sélection d'ensemble */
+.liste-ensembles-jeu, .liste-jeux, .liste-ensembles {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.liste-ensembles-jeu .bouton-ensemble {
+  width: 100%;
+  min-height: 64px;
+  font-size: 1.2rem;
+}
+
+.liste-jeux {
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.bouton-jeu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 100px;
+  text-decoration: none;
+  font-size: 1.3rem;
+}
+
+.liste-ensembles {
+  grid-template-columns: 1fr;
+}
+
+.liste-ensembles li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--couleur-carte);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+  padding: 12px 16px;
+}
+
+.liste-ensembles li a {
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.lien-admin {
+  margin-top: 40px;
+  text-align: center;
+}
+
+/* Administration : liste des cartes */
+.grille-cartes-admin {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.grille-cartes-admin li {
+  background: var(--couleur-carte);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.grille-cartes-admin img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  background: #fff;
+  border: 1px solid var(--couleur-bordure);
+  border-radius: 8px;
+}
+
+.actions-carte {
+  display: flex;
+  gap: 6px;
+}
+
+.actions-carte button {
+  flex: 1;
+  padding: 8px;
+  font-size: 1rem;
+}
+
+.aide {
+  color: #56606f;
+  font-size: 0.95rem;
+  margin: 4px 0;
+}
+
+/* Pages de jeu */
+.selecteur-nombre {
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+  padding: 16px 20px;
+  margin: 16px 0;
+}
+
+.selecteur-nombre legend {
+  font-weight: 700;
+  padding: 0 6px;
+}
+
+.option-radio {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.option-radio input[type="number"] {
+  width: 90px;
+}
+
+.option-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  margin: 16px 0;
+  cursor: pointer;
+}
+
+.option-checkbox input {
+  width: 20px;
+  height: 20px;
+}
+
+.bloc-choix-cartes {
+  margin-top: 6px;
+  padding-top: 10px;
+  border-top: 1px solid var(--couleur-bordure);
+}
+
+.actions-choix-cartes {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.actions-choix-cartes button {
+  background: #56606f;
+  font-size: 0.9rem;
+  padding: 8px 14px;
+}
+
+.actions-choix-cartes button:hover {
+  background: #3d4552;
+}
+
+.grille-vignettes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 10px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding: 4px;
+}
+
+.vignette-carte {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  border: 2px solid var(--couleur-bordure);
+  border-radius: 8px;
+  padding: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.vignette-carte:has(input:checked) {
+  border-color: var(--couleur-accent);
+  background: #eaf1ff;
+}
+
+.vignette-carte img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 4px;
+}
+
+.vignette-carte input {
+  align-self: flex-start;
+}
+
+.zone-carte {
+  background: var(--couleur-carte);
+  border: 1px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.zone-carte img {
+  width: calc(500px * var(--echelle-carte));
+  max-width: 100%;
+  max-height: calc(60vh * var(--echelle-carte));
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  background: #fff;
+}
+
+.mot-carte {
+  font-size: calc(1.6rem * var(--echelle-texte));
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Carte réponse du jeu "Carte manquante" : environ deux fois la taille
+   d'une carte de la grille, pas plein écran comme en répétition. */
+#bloc-reponse {
+  max-width: 240px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 16px;
+}
+
+#bloc-reponse img {
+  max-width: calc(220px * var(--echelle-carte));
+  max-height: calc(220px * var(--echelle-carte));
+}
+
+.commandes-jeu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.commandes-jeu button {
+  min-width: 160px;
+  font-size: 1.2rem;
+}
+
+#compteur-cartes {
+  font-weight: 700;
+  font-size: 1.2rem;
+  min-width: 80px;
+  text-align: center;
+}
+
+.bouton-secondaire {
+  background: #56606f;
+  display: block;
+  margin: 0 auto;
+}
+
+.bouton-secondaire:hover {
+  background: #3d4552;
+}
+
+/* Memory */
+.statut-jeu {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+}
+
+.grille-cartes-jeu {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(calc(110px * var(--echelle-carte)), 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.carte-flip {
+  background: transparent;
+  padding: 0;
+  aspect-ratio: 1 / 1;
+  perspective: 800px;
+  border-radius: var(--rayon);
+}
+
+button.carte-flip:hover {
+  background: transparent;
+}
+
+.interieur-carte {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: block;
+  transition: transform 0.4s;
+  transform-style: preserve-3d;
+}
+
+.carte-flip.retournee .interieur-carte {
+  transform: rotateY(180deg);
+}
+
+.face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  border-radius: 8px;
+  border: 2px solid var(--couleur-bordure);
+}
+
+.face-dos {
+  background: var(--couleur-accent);
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.face-image {
+  background: #fff;
+  transform: rotateY(180deg);
+  padding: 6px;
+}
+
+.face-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.carte-flip.trouvee .face-dos,
+.carte-flip.trouvee .face-image {
+  border-color: #2f9e44;
+}
+
+/* Trouve l'image (Oral) — dictée de lettres */
+.carte-lettre {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: var(--couleur-carte);
+  border: 2px solid var(--couleur-bordure);
+  border-radius: var(--rayon);
+  padding: 8px;
+}
+
+.carte-lettre img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  background: #fff;
+}
+
+.lettre-carte {
+  font-size: calc(1.4rem * var(--echelle-texte));
+  font-weight: 800;
+  color: var(--couleur-accent-fonce);
+}
+
+.carte-lettre.correcte {
+  border-color: #2f9e44;
+  background: #eafaf0;
+}
+
+#bloc-correction select {
+  font-size: 1.05rem;
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+/* Loto */
+.lettre-carte-mot {
+  font-size: calc(1rem * var(--echelle-texte));
+  text-align: center;
+}
+
+.carte-loto.tiree {
+  border-color: var(--couleur-accent);
+  background: #eaf1ff;
+  opacity: 0.75;
+}
+
+.carte-loto.mot-seul {
+  aspect-ratio: 1 / 1;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Chrono */
+.option-champ-duree {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  margin: 16px 0;
+}
+
+.option-champ-duree input {
+  width: 80px;
+}
+
+.barre-chrono-fond {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto 10px;
+  height: 16px;
+  background: var(--couleur-bordure);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.barre-chrono {
+  height: 100%;
+  background: var(--couleur-accent);
+  width: 100%;
+  transition: width 0.1s linear, background 0.2s;
+}
+
+.barre-chrono.urgent {
+  background: var(--couleur-danger);
+}
+
+/* Trouve l'image (Écrit) */
+.mot-a-trouver {
+  font-size: calc(2rem * var(--echelle-texte));
+  font-weight: 800;
+  margin: 0;
+  color: var(--couleur-accent-fonce);
+}
+
+.carte-association {
+  cursor: pointer;
+}
+
+.carte-association:hover {
+  border-color: var(--couleur-accent);
+}
+
+.carte-association.trouvee {
+  border-color: #2f9e44;
+  background: #eafaf0;
+  cursor: default;
+}
+
+.carte-association.erreur {
+  border-color: var(--couleur-danger);
+  animation: secousse 0.3s;
+}
+
+@keyframes secousse {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+/* Réponses vrai/faux (Vrai ou Faux, Le Pendu) */
+.reponse-vraie {
+  color: #2f9e44;
+  font-weight: 800;
+  font-size: 1.4rem;
+}
+
+.reponse-fausse {
+  color: var(--couleur-danger);
+  font-weight: 800;
+  font-size: 1.4rem;
+}
+
+/* Le Pendu */
+.mot-pendu {
+  text-align: center;
+  font-size: calc(2.2rem * var(--echelle-texte));
+  font-weight: 800;
+  letter-spacing: 4px;
+  margin: 16px 0;
+}
+
+.pips-essais {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.pip {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--couleur-bordure);
+}
+
+.pip.plein {
+  background: var(--couleur-accent);
+}
+
+.clavier-pendu {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
+  gap: 8px;
+  max-width: 700px;
+  margin: 16px auto;
+}
+
+.touche-pendu {
+  padding: 10px 0;
+  font-size: 1.1rem;
+  min-width: unset;
+}
+
+.touche-pendu.correcte {
+  background: #2f9e44;
+}
+
+.touche-pendu.incorrecte {
+  background: var(--couleur-danger);
+}
+
+.grille-apercus {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 10px;
+}
+
+.grille-apercus li {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.grille-apercus img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  border: 1px solid var(--couleur-bordure);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.grille-apercus button {
+  font-size: 0.85rem;
+  padding: 6px;
+}

@@ -1,0 +1,8 @@
+# Ensembles de flashcards créés par l'enseignant (images + vocabulaire) :
+# propres à chaque déploiement, ne pas versionner.
+/data/*/
+/data/index.json
+
+# Mot de passe administrateur : à configurer sur chaque environnement à
+# partir de includes/config.php.example (voir README.md).
+/includes/config.php

@@ -1,0 +1,20 @@
+# Empêche le listage du contenu des dossiers (ex. /jeux/) qui ne
+# contiennent pas de fichier d'accueil (index.html/index.php) : le
+# navigateur reçoit une erreur 403 plutôt que la liste des fichiers.
+Options -Indexes
+
+# Une fois un certificat SSL (HTTPS) actif sur votre hébergement,
+# décommentez les 3 lignes suivantes pour forcer le chiffrement du trafic
+# (notamment lors de l'envoi du mot de passe de l'espace enseignant).
+# RewriteEngine On
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Empêche les navigateurs de garder une page HTML/PHP obsolète en cache :
+# ils doivent revérifier auprès du serveur avant d'afficher une copie locale
+# (les fichiers CSS/JS, eux, sont versionnés via ?v=N dans leur URL).
+<IfModule mod_headers.c>
+  <FilesMatch "\.(html|php)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>

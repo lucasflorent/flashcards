@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Loto - Flashcards</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../assets/css/style.css?v=12">
+</head>
+<body class="page-jeu">
+<header class="entete">
+  <h1>Loto</h1>
+  <div class="controle-taille">
+    <label for="curseur-taille">Taille des images</label>
+    <input type="range" id="curseur-taille" min="50" max="400" step="10" value="100">
+    <span id="valeur-taille" class="valeur-taille">100 %</span>
+  </div>
+  <div class="controle-taille">
+    <label for="curseur-texte">Taille du texte</label>
+    <input type="range" id="curseur-texte" min="50" max="400" step="10" value="100">
+    <span id="valeur-texte" class="valeur-taille">100 %</span>
+  </div>
+  <nav><a id="lien-retour" href="../">← Menu des jeux</a></nav>
+</header>
+<main class="conteneur">
+  <section id="ecran-configuration">
+    <h2>Ensemble : <span id="nom-ensemble"></span></h2>
+    <div id="zone-selecteur"></div>
+    <fieldset class="selecteur-nombre">
+      <legend>Affichage</legend>
+      <label class="option-radio"><input type="radio" name="mode-affichage" value="both" checked> Images + mots</label>
+      <label class="option-radio"><input type="radio" name="mode-affichage" value="images"> Images seules</label>
+      <label class="option-radio"><input type="radio" name="mode-affichage" value="mots"> Mots seuls</label>
+    </fieldset>
+    <p class="aide">Une carte sans mot associé affichera son image même en mode "Mots seuls".</p>
+    <button id="bouton-demarrer">Démarrer</button>
+    <p id="erreur-chargement" class="message-erreur" hidden></p>
+  </section>
+
+  <section id="ecran-jeu" hidden>
+    <p class="aide">Cliquez sur "Tirer une carte" pour annoncer un mot. Les élèves cochent leur planche si elle correspond.</p>
+
+    <div id="bloc-tirage" class="zone-carte">
+      <img id="image-tirage" alt="">
+      <p id="mot-tirage" class="mot-carte" hidden></p>
+      <p id="message-tirage" class="statut-jeu"></p>
+    </div>
+
+    <div class="commandes-jeu">
+      <button id="bouton-tirer">Tirer une carte</button>
+    </div>
+
+    <h2>Cartes déjà tirées (<span id="compte-tirees">0</span> / <span id="compte-total">0</span>)</h2>
+    <div id="grille-loto" class="grille-cartes-jeu"></div>
+
+    <button id="bouton-recommencer" class="bouton-secondaire">Changer les cartes</button>
+  </section>
+</main>
+<script src="../assets/js/game-common.js?v=12"></script>
+<script src="../assets/js/jeu-loto.js?v=12"></script>
+</body>
+</html>

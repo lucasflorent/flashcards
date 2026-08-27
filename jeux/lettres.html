@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Trouve l'image (Oral) - Flashcards</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../assets/css/style.css?v=12">
+</head>
+<body class="page-jeu">
+<header class="entete">
+  <h1>Trouve l'image (Oral)</h1>
+  <div class="controle-taille">
+    <label for="curseur-taille">Taille des images</label>
+    <input type="range" id="curseur-taille" min="50" max="400" step="10" value="100">
+    <span id="valeur-taille" class="valeur-taille">100 %</span>
+  </div>
+  <div class="controle-taille">
+    <label for="curseur-texte">Taille du texte</label>
+    <input type="range" id="curseur-texte" min="50" max="400" step="10" value="100">
+    <span id="valeur-texte" class="valeur-taille">100 %</span>
+  </div>
+  <nav><a id="lien-retour" href="../">← Menu des jeux</a></nav>
+</header>
+<main class="conteneur">
+  <section id="ecran-configuration">
+    <h2>Ensemble : <span id="nom-ensemble"></span></h2>
+    <div id="zone-selecteur"></div>
+    <button id="bouton-demarrer">Démarrer</button>
+    <p id="erreur-chargement" class="message-erreur" hidden></p>
+  </section>
+
+  <section id="ecran-jeu" hidden>
+    <p class="aide">Annoncez un mot à voix haute. Les élèves écrivent la lettre de la carte correspondante (sur ardoise). Utilisez la correction ci-dessous pour vérifier collectivement.</p>
+    <div id="grille-lettres" class="grille-cartes-jeu"></div>
+
+    <div id="bloc-correction" class="carte-form">
+      <h2>Correction</h2>
+      <label for="selecteur-mot">Mot annoncé :</label>
+      <select id="selecteur-mot"></select>
+      <button id="bouton-verifier">Vérifier</button>
+      <p id="resultat-correction" class="mot-carte" hidden></p>
+    </div>
+    <p id="aucun-mot" class="aide" hidden>Aucun mot associé n'a été renseigné pour ces cartes : la correction automatique n'est pas disponible ici, mais vous pouvez tout de même utiliser cette page pour l'annonce orale.</p>
+
+    <div class="commandes-jeu">
+      <button id="bouton-nouvelle-manche" class="bouton-secondaire">Nouvelle manche (mêmes cartes)</button>
+      <button id="bouton-recommencer" class="bouton-secondaire">Changer les cartes</button>
+    </div>
+  </section>
+</main>
+<script src="../assets/js/game-common.js?v=12"></script>
+<script src="../assets/js/jeu-lettres.js?v=12"></script>
+</body>
+</html>

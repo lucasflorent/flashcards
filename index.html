@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Flashcards - Jeux de classe</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="assets/css/style.css?v=12">
+</head>
+<body>
+<main class="conteneur">
+  <h1>Flashcards - Jeux de classe</h1>
+
+  <section id="ecran-ensembles">
+    <h2>Choisissez un ensemble de flashcards</h2>
+    <ul id="liste-ensembles" class="liste-ensembles-jeu"></ul>
+    <p id="aucun-ensemble" class="vide" hidden></p>
+  </section>
+
+  <section id="ecran-jeux" hidden>
+    <h2>Ensemble : <span id="nom-ensemble-choisi"></span></h2>
+    <p><a href="#" id="lien-changer-ensemble">← Choisir un autre ensemble</a></p>
+    <ul class="liste-jeux">
+      <li><a class="bouton-jeu" data-jeu="jeux/repetition.html" href="#">Répétition aléatoire</a></li>
+      <li><a class="bouton-jeu" data-jeu="jeux/memory.html" href="#">Memory</a></li>
+      <li><a class="bouton-jeu" data-jeu="jeux/intrus.html" href="#">Carte manquante</a></li>
+      <li><a class="bouton-jeu" data-jeu="jeux/lettres.html" href="#">Trouve l'image (Oral)</a></li>
+      <li><a class="bouton-jeu" data-jeu="jeux/association.html" href="#">Trouve l'image (Écrit)</a></li>
+      <li><a class="bouton-jeu" data-jeu="jeux/loto.html" href="#">Loto</a></li>
+      <li><a class="bouton-jeu" data-jeu="jeux/chrono.html" href="#">Chrono</a></li>
+      <li><a class="bouton-jeu" data-jeu="jeux/pendu.html" href="#">Le Pendu</a></li>
+      <li><a class="bouton-jeu" data-jeu="jeux/vraifaux.html" href="#">Vrai ou Faux</a></li>
+      <li><a class="bouton-jeu" data-jeu="jeux/intrus-paires.html" href="#">L'intrus des paires</a></li>
+    </ul>
+  </section>
+
+  <p class="lien-admin"><a href="admin/login.php">Espace enseignant (gestion des ensembles)</a></p>
+</main>
+<script src="assets/js/accueil.js?v=12"></script>
+</body>
+</html>

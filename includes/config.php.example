@@ -1,0 +1,10 @@
+<?php
+if (!defined('APP_INIT')) { http_response_code(403); exit; }
+
+// Copiez ce fichier en "config.php" (dans le même dossier) et remplacez la
+// valeur ci-dessous par un hash généré avec :
+// php -r "echo password_hash('votre-mot-de-passe', PASSWORD_DEFAULT);"
+define('ADMIN_PASSWORD_HASH', '$2y$10$REMPLACEZ_MOI_PAR_UN_HASH_GENERE');
+
+define('DATA_DIR', __DIR__ . '/../data');
+define('SESSION_NAME', 'flashcards_admin');
