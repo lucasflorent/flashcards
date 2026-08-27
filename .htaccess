@@ -3,12 +3,12 @@
 # navigateur reçoit une erreur 403 plutôt que la liste des fichiers.
 Options -Indexes
 
-# Une fois un certificat SSL (HTTPS) actif sur votre hébergement,
-# décommentez les 3 lignes suivantes pour forcer le chiffrement du trafic
-# (notamment lors de l'envoi du mot de passe de l'espace enseignant).
-# RewriteEngine On
-# RewriteCond %{HTTPS} off
-# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# Force le chiffrement du trafic : toute connexion HTTP est redirigée
+# automatiquement vers son équivalent HTTPS (notamment lors de l'envoi du
+# mot de passe de l'espace enseignant). Nécessite un certificat SSL actif.
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # Empêche les navigateurs de garder une page HTML/PHP obsolète en cache :
 # ils doivent revérifier auprès du serveur avant d'afficher une copie locale
