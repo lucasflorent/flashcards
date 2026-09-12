@@ -545,6 +545,14 @@ input[type="password"]::-ms-clear {
   background: #3d4552;
 }
 
+.bouton-succes {
+  background: #2f9e44;
+}
+
+.bouton-succes:hover {
+  background: #268038;
+}
+
 /* Memory */
 .statut-jeu {
   text-align: center;

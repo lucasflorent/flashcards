@@ -18,7 +18,7 @@ $ensembles = readIndex();
 <meta charset="utf-8">
 <title>Mes ensembles - Espace enseignant</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="../assets/css/style.css?v=12">
+<link rel="stylesheet" href="../assets/css/style.css?v=13">
 </head>
 <body class="page-admin">
 <header class="entete">
@@ -54,6 +54,6 @@ $ensembles = readIndex();
     </ul>
   </section>
 </main>
-<script src="../assets/js/admin-index.js?v=12"></script>
+<script src="../assets/js/admin-index.js?v=13"></script>
 </body>
 </html>

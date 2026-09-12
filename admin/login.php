@@ -14,7 +14,7 @@ if (isAuthenticated()) {
 <meta charset="utf-8">
 <title>Connexion - Espace enseignant</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="../assets/css/style.css?v=12">
+<link rel="stylesheet" href="../assets/css/style.css?v=13">
 </head>
 <body class="page-admin">
 <main class="conteneur-etroit">
