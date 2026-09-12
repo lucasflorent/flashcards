@@ -83,10 +83,11 @@ function construireGrille() {
     bouton.type = 'button';
     bouton.className = 'carte-flip';
     bouton.dataset.index = String(index);
-    bouton.setAttribute('aria-label', 'Carte cachée');
+    const numero = index + 1;
+    bouton.setAttribute('aria-label', 'Carte n° ' + numero);
     bouton.innerHTML =
       '<span class="interieur-carte">' +
-        '<span class="face face-dos">?</span>' +
+        '<span class="face face-dos">' + numero + '</span>' +
         '<span class="face face-image"><img src="' + urlImage(slug, carte.fichier) + '" alt=""></span>' +
       '</span>';
     bouton.addEventListener('click', () => retournerCarte(index));
@@ -143,7 +144,7 @@ function majApparenceCarte(index) {
   bouton.classList.toggle('retournee', carte.etat !== 'cachee');
   bouton.classList.toggle('trouvee', carte.etat === 'trouvee');
   bouton.disabled = carte.etat === 'trouvee';
-  bouton.setAttribute('aria-label', carte.etat === 'cachee' ? 'Carte cachée' : (carte.motAssocie || 'Carte retournée'));
+  bouton.setAttribute('aria-label', carte.etat === 'cachee' ? 'Carte n° ' + (index + 1) : (carte.motAssocie || 'Carte retournée'));
 }
 
 function majStatut() {
