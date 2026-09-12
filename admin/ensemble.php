@@ -21,7 +21,7 @@ if ($manifest === null) {
 <meta charset="utf-8">
 <title><?= htmlspecialchars($manifest['nom']) ?> - Espace enseignant</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="../assets/css/style.css?v=12">
+<link rel="stylesheet" href="../assets/css/style.css?v=13">
 </head>
 <body class="page-admin">
 <header class="entete">
@@ -61,7 +61,7 @@ if ($manifest === null) {
     <p id="liste-vide" class="vide" <?= count($manifest['cartes']) ? 'hidden' : '' ?>>Aucune carte pour l'instant.</p>
   </section>
 </main>
-<script src="../assets/js/square-image.js?v=12"></script>
-<script src="../assets/js/admin-ensemble.js?v=12"></script>
+<script src="../assets/js/square-image.js?v=13"></script>
+<script src="../assets/js/admin-ensemble.js?v=13"></script>
 </body>
 </html>

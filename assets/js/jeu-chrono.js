@@ -11,6 +11,7 @@ const motCarte = document.getElementById('mot-carte');
 const barreChrono = document.getElementById('barre-chrono');
 const minuteurTexte = document.getElementById('minuteur-texte');
 const boutonPause = document.getElementById('bouton-pause');
+const boutonReussi = document.getElementById('bouton-reussi');
 const boutonSuivante = document.getElementById('bouton-suivante');
 const compteurCartes = document.getElementById('compteur-cartes');
 const boutonRecommencer = document.getElementById('bouton-recommencer');
@@ -23,8 +24,8 @@ let modeAffichage = 'both'; // 'both' | 'images' | 'mots'
 let dureeParCarte = 5000;
 let tempsRestant = 0;
 let idIntervalle = null;
-let idMinuteurFin = null;
 let enPause = false;
+let carteResolue = false; // true une fois le temps écoulé ou "Réussi" cliqué
 
 function carteMontreImage(carte) {
   return modeAffichage !== 'mots' || !carte.motAssocie;
@@ -82,7 +83,6 @@ boutonDemarrer.addEventListener('click', () => {
 
   pioche = melanger(selection);
   indexActuel = 0;
-  boutonPause.disabled = false;
   boutonSuivante.disabled = false;
 
   ecranConfig.hidden = true;
@@ -92,9 +92,11 @@ boutonDemarrer.addEventListener('click', () => {
 
 function demarrerCarte() {
   clearInterval(idIntervalle);
-  clearTimeout(idMinuteurFin);
   enPause = false;
+  carteResolue = false;
+  boutonPause.disabled = false;
   boutonPause.textContent = 'Pause';
+  boutonReussi.disabled = false;
 
   const carte = pioche[indexActuel];
   if (carteMontreImage(carte)) {
@@ -123,12 +125,37 @@ function tick() {
   if (tempsRestant <= 0) {
     tempsRestant = 0;
     majBarre();
-    clearInterval(idIntervalle);
-    minuteurTexte.textContent = 'Temps écoulé !';
-    idMinuteurFin = setTimeout(passerCarteSuivante, 800);
+    revelerCarteComplete();
+    terminerCarte('Temps écoulé !');
     return;
   }
   majBarre();
+}
+
+// Affiche la face de la carte encore cachée (mot sous l'image, ou image
+// au-dessus du mot) : appelé quand le temps est écoulé ou sur clic "Réussi".
+function revelerCarteComplete() {
+  const carte = pioche[indexActuel];
+  if (imageCarte.hidden) {
+    imageCarte.src = urlImage(slug, carte.fichier);
+    imageCarte.alt = carte.motAssocie || '';
+    imageCarte.hidden = false;
+  }
+  if (motCarte.hidden && carte.motAssocie) {
+    motCarte.textContent = carte.motAssocie;
+    motCarte.hidden = false;
+  }
+}
+
+// Fige la carte en cours : plus de décompte, il faut un clic sur
+// "Carte suivante" pour continuer.
+function terminerCarte(message) {
+  clearInterval(idIntervalle);
+  carteResolue = true;
+  enPause = false;
+  boutonPause.disabled = true;
+  boutonReussi.disabled = true;
+  minuteurTexte.textContent = message;
 }
 
 function majBarre() {
@@ -146,11 +173,19 @@ function passerCarteSuivante() {
     clearInterval(idIntervalle);
     minuteurTexte.textContent = 'Manche terminée !';
     boutonPause.disabled = true;
+    boutonReussi.disabled = true;
     boutonSuivante.disabled = true;
   }
 }
 
+boutonReussi.addEventListener('click', () => {
+  if (carteResolue) return;
+  revelerCarteComplete();
+  terminerCarte('Bravo !');
+});
+
 boutonPause.addEventListener('click', () => {
+  if (carteResolue) return;
   if (enPause) {
     enPause = false;
     boutonPause.textContent = 'Pause';
@@ -168,7 +203,6 @@ boutonSuivante.addEventListener('click', () => {
 
 boutonRecommencer.addEventListener('click', () => {
   clearInterval(idIntervalle);
-  clearTimeout(idMinuteurFin);
   ecranJeu.hidden = true;
   ecranConfig.hidden = false;
 });
